@@ -1,23 +1,23 @@
 import React, { useState } from "react";
+import logo from "../assets/img/rainy-day.png";
+import { Link } from "react-router-dom";
 
 export default function HomePage() {
-  const [count, setCount] = useState(0)
-
   return (
     <div className="home-page">
-      <div className="container my-3">
-        <div className="row">
-          <div className="col-4">
-            <div className="card">
-              <div className="card-body">
-                <button className="btn btn-success my-1" onClick={() => setCount((count) => count + 1)}>
-                  count is {count}
-                </button>
-              </div>
-            </div>
+      <div className="container my-2">
+        <div className="row d-flex justify-content-center">
+          <div className="col-12 col-md-6 d-flex flex-column justify-content-center home-page">
+            <img src={logo} alt="" className="img-fluid" />
+            <h1 className="text-center text-light mt-3">Weathery</h1>
+            <Link className="d-flex justify-content-center" to={"Main"}>
+              <button className="btn btn-warning w-75 h-100 text-center rounded-pill">
+                Get Started
+              </button>
+            </Link>
           </div>
         </div>
       </div>
     </div>
-  )
+  );
 }
