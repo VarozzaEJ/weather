@@ -1,25 +1,16 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import logo from "../assets/img/rainy-day.png";
 import { HourlyWeatherCard } from "./HourlyWeatherCard.jsx";
 import { AppState } from "../AppState.js";
 import { weatherService } from "../services/WeatherService.js";
+import { api } from "../services/AxiosService.js";
 
 export function HourlyWeather() {
-  useEffect(() => {
-    const fetchData = async () => {
-      const data = await fetch("api/weather");
-      console.log(data);
-    };
-
-    // call the function
-    fetchData()
-      // make sure to catch any error
-      .catch(console.error);
-  }, []);
+  const weatherData = useState(() => AppState.weather);
 
   return (
     <>
-      <div className="container rounded shadow-lg mb-5 text-light bg-smokey">
+      <div className="container rounded shadow-lg mb-1 text-light bg-smokey">
         <div className="row">
           <div className="col-12 mb-3 border-bottom d-flex justify-content-between">
             <span className="my-1">Today</span>

@@ -9,6 +9,8 @@ class ObservableAppState {
   account = null
 
   temperature = null
+
+  weather = null
   constructor() {
     makeAutoObservable(this)
   }
