@@ -46,7 +46,12 @@ export function HourlyWeather({ data }) {
         (hour) => hour > response.data.current.time
       );
       const updatedCurrentTime = currentTime.map((hour) =>
-        new Date(hour * 1000).toLocaleTimeString()
+        new Date(hour * 1000)
+          .toLocaleTimeString([], {
+            hour: "2-digit",
+            minute: "2-digit",
+          })
+          .slice(1, 8)
       );
       setCurrentTimes(updatedCurrentTime);
     } catch (error) {

@@ -11,7 +11,7 @@ export function HourlyWeatherCard({ time }) {
         src={logo}
         alt=""
       />
-      <span className="text-center my-1">5:00</span>
+      <span className="text-center my-1">{time}</span>
     </div>
   );
 }
