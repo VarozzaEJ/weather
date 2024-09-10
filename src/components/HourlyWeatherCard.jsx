@@ -1,7 +1,6 @@
 import logo from "../assets/img/rainy-day.png";
 
 export function HourlyWeatherCard({ time }) {
-  console.log(time);
   return (
     <div className="d-flex flex-column">
       <span className="text-center">87</span>

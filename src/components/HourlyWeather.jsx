@@ -10,6 +10,7 @@ export function HourlyWeather({ data }) {
   const [month, setMonth] = useState("");
   const [weatherData, setData] = useState({});
   const [currentTimes, setCurrentTimes] = useState([]);
+  const [currentTemps, setCurrentTemps] = useState([]);
 
   useEffect(() => {
     const months = [
@@ -42,9 +43,12 @@ export function HourlyWeather({ data }) {
         `https://api.open-meteo.com/v1/forecast?latitude=${data.lat}&longitude=${data.lon}&current=temperature_2m,weather_code&hourly=temperature_2m,weather_code&daily=weather_code,temperature_2m_max,temperature_2m_min,sunrise,sunset,uv_index_max&temperature_unit=fahrenheit&wind_speed_unit=mph&precipitation_unit=inch&timeformat=unixtime&timezone=America%2FDenver`
       );
       setData(response.data);
+      console.log(response.data);
+
       const currentTime = response.data.hourly.time.filter(
         (hour) => hour > response.data.current.time
       );
+
       const updatedCurrentTime = currentTime.map((hour) =>
         new Date(hour * 1000)
           .toLocaleTimeString([], {
