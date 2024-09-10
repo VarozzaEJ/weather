@@ -1,12 +1,11 @@
 import logo from "../assets/img/rainy-day.png";
 import { HourlyWeather } from "../components/HourlyWeather.jsx";
-import { api } from "../services/AxiosService.js";
-import { FahrenheitSymbol } from "../components/Fahrenheitsymbol.jsx";
 import Icon from "@mdi/react";
 import { mdiMapMarker } from "@mdi/js";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import axios from "axios";
 import { Modal } from "bootstrap";
+import { AppState } from "../AppState.js";
 
 export function MainPage() {
   const [data, setData] = useState({});
@@ -61,9 +60,10 @@ export function MainPage() {
           </div>
           <div>
             <HourlyWeather />
+
             <footer className="container mb-2">
               <div className="row d-flex justify-content-center">
-                <div className="col-3">
+                <div className="col-3 d-flex justify-content-center">
                   <Icon
                     path={mdiMapMarker}
                     title="User Profile"

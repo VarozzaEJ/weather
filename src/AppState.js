@@ -11,6 +11,9 @@ class ObservableAppState {
   temperature = null
 
   weather = null
+
+  date = null
+  month = ''
   constructor() {
     makeAutoObservable(this)
   }
