@@ -13,7 +13,7 @@ export function MainPage() {
   const [location, setLocation] = useState("");
 
   useEffect(() => {
-    openModal;
+    openModal();
   });
 
   const openModal = () => {
@@ -73,7 +73,7 @@ export function MainPage() {
             </div>
           </div>
           <div>
-            <HourlyWeather />
+            {data.main ? <HourlyWeather data={data.coord} /> : null}
 
             <footer className="container mb-2">
               <div className="row d-flex justify-content-center">
@@ -97,14 +97,14 @@ export function MainPage() {
       </div>
 
       <div
-        className="modal fade"
+        className="modal  fade"
         id="exampleModal"
         tabIndex="-1"
         aria-labelledby="exampleModalLabel"
         aria-hidden="true"
       >
         <div className="modal-dialog position-fixed bottom-0 end-0 start-0">
-          <div className="modal-content">
+          <div className="modal-content bg-secondary">
             <div className="modal-header">
               <h1 className="modal-title fs-5" id="exampleModalLabel">
                 Choose A Location

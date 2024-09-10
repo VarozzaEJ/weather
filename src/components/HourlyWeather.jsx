@@ -1,11 +1,14 @@
 import { useEffect, useState } from "react";
 import { HourlyWeatherCard } from "./HourlyWeatherCard.jsx";
 import { AppState } from "../AppState.js";
+import axios from "axios";
+import Pop from "../utils/Pop.js";
 
-export function HourlyWeather() {
+export function HourlyWeather({ data }) {
   const today = new Date();
   const [date, setDate] = useState(today);
   const [month, setMonth] = useState("");
+  const [weatherData, setData] = useState({});
 
   useEffect(() => {
     const months = [
@@ -26,6 +29,29 @@ export function HourlyWeather() {
     setMonth(month);
   }, []);
 
+  useEffect(() => {
+    if (data) {
+      getSecondaryWeather();
+    }
+  }, []);
+
+  const getSecondaryWeather = async () => {
+    try {
+      const response = await axios.get(
+        `https://api.open-meteo.com/v1/forecast?latitude=${data.lat}&longitude=${data.lon}&current=temperature_2m,weather_code&hourly=temperature_2m,weather_code&daily=weather_code,temperature_2m_max,temperature_2m_min,sunrise,sunset,uv_index_max&temperature_unit=fahrenheit&wind_speed_unit=mph&precipitation_unit=inch&timeformat=unixtime&timezone=America%2FDenver`
+      );
+      setData(response.data);
+      const currentTime = response.data.hourly.time.filter(
+        (hour) => hour > response.data.current.time
+      );
+      const updatedCurrentTime = currentTime.map((hour) =>
+        new Date(hour * 1000).toLocaleTimeString()
+      );
+      console.log("Current Times", updatedCurrentTime);
+    } catch (error) {
+      Pop.error(error);
+    }
+  };
   return (
     <>
       <div className="container rounded shadow-lg mb-1 text-light bg-smokey">
@@ -37,12 +63,14 @@ export function HourlyWeather() {
               {month} {date.getDate()}
             </span>
           </div>
-          <div className="d-flex justify-content-between justify-content-md-around">
-            <HourlyWeatherCard />
-            <HourlyWeatherCard />
-            <HourlyWeatherCard />
-            <HourlyWeatherCard />
-          </div>
+          {weatherData.hourly ? (
+            <div className="d-flex justify-content-between justify-content-md-around">
+              <HourlyWeatherCard time={weatherData.hourly.time[0]} />
+              <HourlyWeatherCard time={weatherData.hourly.time[1]} />
+              <HourlyWeatherCard time={weatherData.hourly.time[2]} />
+              <HourlyWeatherCard time={weatherData.hourly.time[3]} />
+            </div>
+          ) : null}
         </div>
       </div>
     </>

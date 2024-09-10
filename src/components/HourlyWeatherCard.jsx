@@ -1,6 +1,8 @@
 import logo from "../assets/img/rainy-day.png";
 
-export function HourlyWeatherCard() {
+export function HourlyWeatherCard({ time }) {
+  const usableTime = new Date(time * 1000).toLocaleTimeString();
+  console.log(usableTime);
   return (
     <div className="d-flex flex-column">
       <span className="text-center">87</span>
