@@ -6,22 +6,36 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import { Modal } from "bootstrap";
 import { AppState } from "../AppState.js";
+import Pop from "../utils/Pop.js";
 
 export function MainPage() {
   const [data, setData] = useState({});
   const [location, setLocation] = useState("");
 
+  useEffect(() => {
+    openModal;
+  });
+
+  const openModal = () => {
+    Modal.getOrCreateInstance("#exampleModal").show();
+  };
+
   const searchLocation = async (event) => {
     if (event.key === "Enter") {
-      await axios
-        .get(
-          `https://api.openweathermap.org/data/2.5/weather?q=${location}&appid=895284fb2d2c50a520ea537456963d9c`
-        )
-        .then((response) => {
-          setData(response.data);
-          console.log(response.data);
-          Modal.getOrCreateInstance("#exampleModal").hide();
-        });
+      try {
+        await axios
+          .get(
+            `https://api.openweathermap.org/data/2.5/weather?q=${location}&appid=895284fb2d2c50a520ea537456963d9c`
+          )
+          .then((response) => {
+            setData(response.data);
+            console.log(response.data);
+            Modal.getOrCreateInstance("#exampleModal").hide();
+          });
+      } catch (error) {
+        Pop.error("Please enter a valid location");
+      }
+
       setLocation("");
     }
   };
