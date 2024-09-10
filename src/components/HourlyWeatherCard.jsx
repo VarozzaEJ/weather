@@ -1,13 +1,9 @@
-import { useEffect, useState } from "react";
 import logo from "../assets/img/rainy-day.png";
-import { api } from "../services/AxiosService.js";
-import { AppState } from "../AppState.js";
 
 export function HourlyWeatherCard() {
-  const temp = useState(() => AppState.temperature);
   return (
     <div className="d-flex flex-column">
-      <span className="text-center">{temp}</span>
+      <span className="text-center">87</span>
       <img
         className="img-fluid"
         style={{ height: 80, width: 80 }}

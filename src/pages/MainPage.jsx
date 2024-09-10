@@ -6,6 +6,7 @@ import Icon from "@mdi/react";
 import { mdiMapMarker } from "@mdi/js";
 import { useState } from "react";
 import axios from "axios";
+import { Modal } from "bootstrap";
 
 export function MainPage() {
   const [data, setData] = useState({});
@@ -20,6 +21,7 @@ export function MainPage() {
         .then((response) => {
           setData(response.data);
           console.log(response.data);
+          Modal.getOrCreateInstance("#exampleModal").hide();
         });
       setLocation("");
     }
@@ -39,14 +41,22 @@ export function MainPage() {
               {data.main ? (
                 <h1 className="text-center text-light fw-bold">
                   {((data.main.temp - 273.15) * 1.8 + 32).toFixed()}
-                  <FahrenheitSymbol x={25} y={20} />
+                  <span className="ms-1">F°</span>
                 </h1>
               ) : null}
 
-              <div className="col-6 d-flex justify-content-between justify-content-md-center">
-                <span className="fs-3 text-light pe-md-4">Low: 65</span>
-                <span className="fs-3 text-light">High: 90</span>
-              </div>
+              {data.main && (
+                <div className="col-8 d-flex justify-content-between justify-content-md-center">
+                  <span className="fs-3 d-flex text-light pe-md-4">
+                    Low: {((data.main.temp_min - 273.15) * 1.8 + 32).toFixed()}
+                    <p className="ms-1 mb-0">F°</p>
+                  </span>
+                  <span className="fs-3 d-flex text-light">
+                    High: {((data.main.temp_max - 273.15) * 1.8 + 32).toFixed()}
+                    <p className="ms-1 mb-0">F°</p>
+                  </span>
+                </div>
+              )}
             </div>
           </div>
           <div>
@@ -75,7 +85,7 @@ export function MainPage() {
       <div
         className="modal fade"
         id="exampleModal"
-        tabindex="-1"
+        tabIndex="-1"
         aria-labelledby="exampleModalLabel"
         aria-hidden="true"
       >
