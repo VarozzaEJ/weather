@@ -9,6 +9,7 @@ export function HourlyWeather({ data }) {
   const [date, setDate] = useState(today);
   const [month, setMonth] = useState("");
   const [weatherData, setData] = useState({});
+  const [currentTimes, setCurrentTimes] = useState([]);
 
   useEffect(() => {
     const months = [
@@ -47,7 +48,7 @@ export function HourlyWeather({ data }) {
       const updatedCurrentTime = currentTime.map((hour) =>
         new Date(hour * 1000).toLocaleTimeString()
       );
-      console.log("Current Times", updatedCurrentTime);
+      setCurrentTimes(updatedCurrentTime);
     } catch (error) {
       Pop.error(error);
     }
@@ -63,12 +64,12 @@ export function HourlyWeather({ data }) {
               {month} {date.getDate()}
             </span>
           </div>
-          {weatherData.hourly ? (
+          {currentTimes ? (
             <div className="d-flex justify-content-between justify-content-md-around">
-              <HourlyWeatherCard time={weatherData.hourly.time[0]} />
-              <HourlyWeatherCard time={weatherData.hourly.time[1]} />
-              <HourlyWeatherCard time={weatherData.hourly.time[2]} />
-              <HourlyWeatherCard time={weatherData.hourly.time[3]} />
+              <HourlyWeatherCard time={currentTimes[0]} />
+              <HourlyWeatherCard time={currentTimes[1]} />
+              <HourlyWeatherCard time={currentTimes[2]} />
+              <HourlyWeatherCard time={currentTimes[3]} />
             </div>
           ) : null}
         </div>
