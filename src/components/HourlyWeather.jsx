@@ -40,15 +40,12 @@ export function HourlyWeather({ data }) {
   const getSecondaryWeather = async () => {
     try {
       const response = await axios.get(
-        `https://api.open-meteo.com/v1/forecast?latitude=${data.lat}&longitude=${data.lon}&current=temperature_2m,weather_code&hourly=temperature_2m,weather_code&daily=weather_code,temperature_2m_max,temperature_2m_min,uv_index_max&temperature_unit=fahrenheit&wind_speed_unit=mph&precipitation_unit=inch&timeformat=unixtime&timezone=America%2FDenver&forecast_days=1`
+        `https://api.open-meteo.com/v1/forecast?latitude=${data.lat}&longitude=${data.lon}&current=temperature_2m,weather_code&hourly=temperature_2m,weather_code&daily=weather_code,temperature_2m_max,temperature_2m_min,uv_index_max&temperature_unit=fahrenheit&wind_speed_unit=mph&precipitation_unit=inch&timeformat=unixtime&timezone=America%2FDenver`
       );
       setData(response.data);
       console.log(response.data);
 
       const currentTime = response.data.hourly.time.filter(
-        (hour) => hour > response.data.current.time
-      );
-      const currentTimeIndex = response.data.hourly.time.findIndex(
         (hour) => hour > response.data.current.time
       );
 
@@ -58,12 +55,8 @@ export function HourlyWeather({ data }) {
           minute: "2-digit",
         })
       );
-      const currentWeather = response.data.hourly.temperature_2m.splice(
-        0,
-        currentTimeIndex
-      );
-      console.log(currentWeather);
-      setCurrentTemps(currentWeather);
+
+      setCurrentTemps(response.data.hourly.temperature_2m);
       setCurrentTimes(updatedCurrentTime);
     } catch (error) {
       Pop.error(error);

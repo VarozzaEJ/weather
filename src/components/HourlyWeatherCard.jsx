@@ -1,6 +1,6 @@
 import logo from "../assets/img/rainy-day.png";
 
-export function HourlyWeatherCard({ time = "12:00 PM", temperature }) {
+export function HourlyWeatherCard({ time = "12:00 PM", temperature = null }) {
   console.log(temperature);
   return (
     <div className="d-flex flex-column">
