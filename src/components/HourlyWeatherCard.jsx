@@ -7,12 +7,10 @@ export function HourlyWeatherCard({
   temperature = null,
   icon,
 }) {
-  const [currentTemps, setCurrentTemps] = useState(0);
   const [currentIcon, setCurrentIcons] = useState("");
   useEffect(() => {
-    setCurrentTemps(temperature);
     getIconUrl(icon);
-  }, []);
+  }, [icon]);
 
   function getIconUrl(iconCode) {
     console.log(iconCode);

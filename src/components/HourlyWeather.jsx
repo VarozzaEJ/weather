@@ -52,7 +52,6 @@ export function HourlyWeather({ data, UTCOffset }) {
       const correctIndex = response.data.hourly.time.findIndex(
         (hour) => hour > response.data.current.time
       );
-      console.log(correctIndex);
       const updatedCurrentTime = currentTime.map((hour) =>
         new Date(hour * 1000 + UTCOffset).toLocaleTimeString([], {
           hour: "numeric",
@@ -64,10 +63,15 @@ export function HourlyWeather({ data, UTCOffset }) {
         correctIndex,
         response.data.hourly.temperature_2m.length - correctIndex
       );
-      console.log(currentTemp);
+
+      const correctIcons = response.data.hourly.weather_code.splice(
+        correctIndex,
+        response.data.hourly.weather_code.length - correctIndex
+      );
+      console.log(correctIcons);
+      setCurrentIcons(correctIcons);
       setCurrentTemps(currentTemp);
       setCurrentTimes(updatedCurrentTime);
-      setCurrentIcons(response.data.hourly.weather_code);
     } catch (error) {
       Pop.error(error);
     }
@@ -83,7 +87,7 @@ export function HourlyWeather({ data, UTCOffset }) {
               {month} {date.getDate()}
             </span>
           </div>
-          {currentTimes && currentTemps && icons ? (
+          {currentTemps && icons && currentTemps ? (
             <div className="d-flex justify-content-between justify-content-md-around">
               <HourlyWeatherCard
                 time={currentTimes[0]}
