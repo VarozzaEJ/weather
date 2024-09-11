@@ -8,6 +8,16 @@ body {
   overscroll-behavior: none;
 }
 
+:root {
+  font-family: Inter;
+  font-feature-settings: "liga" 1, "calt" 1; /* fix for Chrome */
+}
+@supports (font-variation-settings: normal) {
+  :root {
+    font-family: InterVariable, sans-serif;
+  }
+}
+
 #app {
   display: flex;
   flex-direction: column;
@@ -44,6 +54,10 @@ body {
 
 main {
   flex-grow: 1;
+}
+
+.city-text {
+  font-size: 50px;
 }
 
 a {

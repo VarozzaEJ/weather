@@ -55,7 +55,7 @@ export function MainPage() {
             <div className="row mt-5 d-flex flex-column align-items-center justify-content-center">
               {data.main ? (
                 <div className="col-3 col-md-7 d-flex justify-content-center text-light fs-1 fw-bold">
-                  <span>{data.name}</span>
+                  <span className="city-text">{data.name}</span>
                 </div>
               ) : null}
               {data.main ? (
