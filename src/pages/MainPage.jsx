@@ -1,16 +1,17 @@
 import logo from "../assets/img/rainy-day.png";
 import { HourlyWeather } from "../components/HourlyWeather.jsx";
 import Icon from "@mdi/react";
-import { mdiMapMarker } from "@mdi/js";
+import { mdiLoading, mdiMapMarker } from "@mdi/js";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import { Modal } from "bootstrap";
 import Pop from "../utils/Pop.js";
 import React from "react";
-import { render } from "react-dom";
+import { ICON_MAP } from "../services/ICON_MAP.js";
 export function MainPage() {
   const [data, setData] = useState({});
   const [location, setLocation] = useState("");
+  const [icon, setIcon] = useState("");
 
   useEffect(() => {
     openModal();
@@ -19,6 +20,12 @@ export function MainPage() {
   const openModal = () => {
     Modal.getOrCreateInstance("#exampleModal").show();
   };
+
+  function getIconUrl(iconCode) {
+    console.log(iconCode);
+    const icon = `src/assets/Icons/${ICON_MAP.get(iconCode)}.svg`;
+    setIcon(icon);
+  }
 
   const searchLocation = async (event) => {
     if (event.key === "Enter") {
@@ -29,8 +36,10 @@ export function MainPage() {
           )
           .then((response) => {
             setData(response.data);
+            getIconUrl(response.data.weather[0].icon);
             console.log(response.data);
             Modal.getOrCreateInstance("#exampleModal").hide();
+            Pop.toast("Location Changed", "success", "top-end", 2000);
           });
       } catch (error) {
         Pop.error("Please enter a valid location");
@@ -47,15 +56,36 @@ export function MainPage() {
           <div>
             <div className="row mt-5 d-flex flex-column align-items-center justify-content-center">
               {data.main ? (
-                <div className="col-3 mb-4 col-md-7 d-flex justify-content-center text-light fs-1 fw-bold">
+                <div className="col-3 col-md-7 d-flex justify-content-center text-light fs-1 fw-bold">
                   <span>{data.name}</span>
                 </div>
               ) : null}
-              <div className="col-8 d-flex justify-content-center">
-                <img src={logo} alt="" className="img-fluid" />
-              </div>
+              {data.main ? (
+                <div className="col-8 d-flex justify-content-center">
+                  <img
+                    src={icon}
+                    alt=""
+                    height={350}
+                    width={350}
+                    className=""
+                  />
+                </div>
+              ) : (
+                <div className="col-12 d-flex justify-content-center">
+                  <Icon
+                    path={mdiLoading}
+                    title="User Profile"
+                    size={20}
+                    spin
+                    horizontal
+                    vertical
+                    rotate={180}
+                    color="white"
+                  />
+                </div>
+              )}
             </div>
-            <div className="row d-flex justify-content-center mt-3">
+            <div className="row d-flex justify-content-center">
               {data.main ? (
                 <h1 className="text-center text-light fw-bold">
                   {((data.main.temp - 273.15) * 1.8 + 32).toFixed()}
@@ -84,7 +114,10 @@ export function MainPage() {
 
             <footer className="container mb-2">
               <div className="row d-flex justify-content-center">
-                <div className="col-3 d-flex justify-content-center">
+                <div
+                  role="button"
+                  className="col-1 d-flex justify-content-center"
+                >
                   <Icon
                     path={mdiMapMarker}
                     title="User Profile"

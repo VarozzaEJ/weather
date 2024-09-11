@@ -12,7 +12,6 @@ export function HourlyWeather({ data, UTCOffset }) {
   const [weatherData, setData] = useState({});
   const [currentTimes, setCurrentTimes] = useState([]);
   const [currentTemps, setCurrentTemps] = useState([]);
-  console.log("🗄️", data);
   useEffect(() => {
     const months = [
       "January",
@@ -44,7 +43,6 @@ export function HourlyWeather({ data, UTCOffset }) {
         `https://api.open-meteo.com/v1/forecast?latitude=${data.lat}&longitude=${data.lon}&current=temperature_2m,weather_code&hourly=temperature_2m,weather_code&daily=weather_code,temperature_2m_max,temperature_2m_min,uv_index_max&temperature_unit=fahrenheit&wind_speed_unit=mph&precipitation_unit=inch&timeformat=unixtime&timezone=America%2FDenver`
       );
       setData(response.data);
-      console.log(response.data);
 
       const currentTime = response.data.hourly.time.filter(
         (hour) => hour > response.data.current.time
@@ -56,7 +54,6 @@ export function HourlyWeather({ data, UTCOffset }) {
           minute: "2-digit",
         })
       );
-      console.log("⏱️", updatedCurrentTime);
       setCurrentTemps(response.data.hourly.temperature_2m);
       setCurrentTimes(updatedCurrentTime);
     } catch (error) {
