@@ -1,7 +1,7 @@
 
 export const ICON_MAP = new Map()
 
-addMapping([0, 1, "01d", "01n"], "weather")
+addMapping([0, 1, "01d", "01n"], "day")
 addMapping([2, "02d", "01n"], "cloudy-day-1")
 addMapping([3, "03d", "03n", "04n"], "cloudy")
 addMapping([45, 48], "cloudy")

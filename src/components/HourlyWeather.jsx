@@ -12,6 +12,7 @@ export function HourlyWeather({ data, UTCOffset }) {
   const [weatherData, setData] = useState({});
   const [currentTimes, setCurrentTimes] = useState([]);
   const [currentTemps, setCurrentTemps] = useState([]);
+  const [icons, setCurrentIcons] = useState([]);
   useEffect(() => {
     const months = [
       "January",
@@ -40,22 +41,33 @@ export function HourlyWeather({ data, UTCOffset }) {
   const getSecondaryWeather = async () => {
     try {
       const response = await axios.get(
-        `https://api.open-meteo.com/v1/forecast?latitude=${data.lat}&longitude=${data.lon}&current=temperature_2m,weather_code&hourly=temperature_2m,weather_code&daily=weather_code,temperature_2m_max,temperature_2m_min,uv_index_max&temperature_unit=fahrenheit&wind_speed_unit=mph&precipitation_unit=inch&timeformat=unixtime&timezone=America%2FDenver`
+        `https://api.open-meteo.com/v1/forecast?latitude=${data.lat}&longitude=${data.lon}&current=temperature_2m,weather_code&hourly=temperature_2m,weather_code&daily=weather_code,temperature_2m_max,temperature_2m_min,uv_index_max&temperature_unit=fahrenheit&wind_speed_unit=mph&precipitation_unit=inch&timeformat=unixtime&timezone=America%2FDenver&forecast_days=1`
       );
       setData(response.data);
-
+      console.log(response.data);
       const currentTime = response.data.hourly.time.filter(
         (hour) => hour > response.data.current.time
       );
 
+      const correctIndex = response.data.hourly.time.findIndex(
+        (hour) => hour > response.data.current.time
+      );
+      console.log(correctIndex);
       const updatedCurrentTime = currentTime.map((hour) =>
         new Date(hour * 1000 + UTCOffset).toLocaleTimeString([], {
           hour: "numeric",
           minute: "2-digit",
         })
       );
-      setCurrentTemps(response.data.hourly.temperature_2m);
+
+      const currentTemp = response.data.hourly.temperature_2m.splice(
+        correctIndex,
+        response.data.hourly.temperature_2m.length - correctIndex
+      );
+      console.log(currentTemp);
+      setCurrentTemps(currentTemp);
       setCurrentTimes(updatedCurrentTime);
+      setCurrentIcons(response.data.hourly.weather_code);
     } catch (error) {
       Pop.error(error);
     }
@@ -71,23 +83,27 @@ export function HourlyWeather({ data, UTCOffset }) {
               {month} {date.getDate()}
             </span>
           </div>
-          {currentTimes && currentTemps ? (
+          {currentTimes && currentTemps && icons ? (
             <div className="d-flex justify-content-between justify-content-md-around">
               <HourlyWeatherCard
                 time={currentTimes[0]}
                 temperature={currentTemps[0]}
+                icon={icons[0]}
               />
               <HourlyWeatherCard
                 time={currentTimes[1]}
                 temperature={currentTemps[1]}
+                icon={icons[1]}
               />
               <HourlyWeatherCard
                 time={currentTimes[2]}
                 temperature={currentTemps[2]}
+                icon={icons[2]}
               />
               <HourlyWeatherCard
                 time={currentTimes[3]}
                 temperature={currentTemps[3]}
+                icon={icons[3]}
               />
             </div>
           ) : null}

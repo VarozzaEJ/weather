@@ -1,4 +1,3 @@
-import logo from "../assets/img/rainy-day.png";
 import { HourlyWeather } from "../components/HourlyWeather.jsx";
 import Icon from "@mdi/react";
 import { mdiLoading, mdiMapMarker } from "@mdi/js";
@@ -37,7 +36,6 @@ export function MainPage() {
           .then((response) => {
             setData(response.data);
             getIconUrl(response.data.weather[0].icon);
-            console.log(response.data);
             Modal.getOrCreateInstance("#exampleModal").hide();
             Pop.toast("Location Changed", "success", "top-end", 2000);
           });
@@ -116,14 +114,14 @@ export function MainPage() {
               <div className="row d-flex justify-content-center">
                 <div
                   role="button"
-                  className="col-1 d-flex justify-content-center"
+                  className="col-3 d-flex justify-content-center"
                 >
                   <Icon
                     path={mdiMapMarker}
-                    title="User Profile"
-                    size={2}
+                    title="Set Location"
                     horizontal
                     vertical
+                    size={2}
                     rotate={180}
                     color="white"
                     data-bs-toggle="modal"
