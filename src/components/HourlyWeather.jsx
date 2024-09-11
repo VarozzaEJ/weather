@@ -4,7 +4,7 @@ import { AppState } from "../AppState.js";
 import axios from "axios";
 import Pop from "../utils/Pop.js";
 
-export function HourlyWeather({ data }) {
+export function HourlyWeather({ data, UTCOffset }) {
   const today = new Date();
   const [date, setDate] = useState(today);
   const [month, setMonth] = useState("");
@@ -40,7 +40,7 @@ export function HourlyWeather({ data }) {
   const getSecondaryWeather = async () => {
     try {
       const response = await axios.get(
-        `https://api.open-meteo.com/v1/forecast?latitude=${data.lat}&longitude=${data.lon}&current=temperature_2m,weather_code&hourly=temperature_2m,weather_code&daily=weather_code,temperature_2m_max,temperature_2m_min,uv_index_max&temperature_unit=fahrenheit&wind_speed_unit=mph&precipitation_unit=inch&timeformat=unixtime&timezone=America%2FDenver`
+        `https://api.open-meteo.com/v1/forecast?latitude=${data.lat}&longitude=${data.lon}&current=temperature_2m,weather_code&hourly=temperature_2m,weather_code&daily=weather_code,temperature_2m_max,temperature_2m_min,uv_index_max&temperature_unit=fahrenheit&wind_speed_unit=mph&precipitation_unit=inch&timeformat=unixtime`
       );
       setData(response.data);
       console.log(response.data);
@@ -48,14 +48,13 @@ export function HourlyWeather({ data }) {
       const currentTime = response.data.hourly.time.filter(
         (hour) => hour > response.data.current.time
       );
-
       const updatedCurrentTime = currentTime.map((hour) =>
-        new Date(hour * 1000).toLocaleTimeString([], {
+        new Date(hour * 1000 + UTCOffset).toLocaleTimeString([], {
           hour: "numeric",
           minute: "2-digit",
         })
       );
-
+      console.log("⏱️", updatedCurrentTime);
       setCurrentTemps(response.data.hourly.temperature_2m);
       setCurrentTimes(updatedCurrentTime);
     } catch (error) {

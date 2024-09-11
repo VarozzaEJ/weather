@@ -5,7 +5,6 @@ import { mdiMapMarker } from "@mdi/js";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import { Modal } from "bootstrap";
-import { AppState } from "../AppState.js";
 import Pop from "../utils/Pop.js";
 
 export function MainPage() {
@@ -45,7 +44,12 @@ export function MainPage() {
       <div className="container-fluid full-vh">
         <div className="d-flex flex-column justify-content-between full-vh">
           <div>
-            <div className="row mt-5 d-flex justify-content-center">
+            <div className="row mt-5 d-flex flex-column align-items-center justify-content-center">
+              {data.main ? (
+                <div className="col-3 mb-4 col-md-7 d-flex justify-content-center text-light fs-1 fw-bold">
+                  <span>{data.name}</span>
+                </div>
+              ) : null}
               <div className="col-8 d-flex justify-content-center">
                 <img src={logo} alt="" className="img-fluid" />
               </div>
@@ -73,7 +77,9 @@ export function MainPage() {
             </div>
           </div>
           <div>
-            {data.main ? <HourlyWeather data={data.coord} /> : null}
+            {data.main ? (
+              <HourlyWeather data={data.coord} UTCOffset={data.timezone} />
+            ) : null}
 
             <footer className="container mb-2">
               <div className="row d-flex justify-content-center">
