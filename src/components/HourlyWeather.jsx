@@ -48,15 +48,22 @@ export function HourlyWeather({ data }) {
       const currentTime = response.data.hourly.time.filter(
         (hour) => hour > response.data.current.time
       );
+      const currentTimeIndex = response.data.hourly.time.findIndex(
+        (hour) => hour > response.data.current.time
+      );
 
       const updatedCurrentTime = currentTime.map((hour) =>
-        new Date(hour * 1000)
-          .toLocaleTimeString([], {
-            hour: "2-digit",
-            minute: "2-digit",
-          })
-          .slice(1, 8)
+        new Date(hour * 1000).toLocaleTimeString([], {
+          hour: "numeric",
+          minute: "2-digit",
+        })
       );
+      const currentWeather = response.data.hourly.temperature_2m.splice(
+        0,
+        currentTimeIndex
+      );
+      console.log(currentWeather);
+      setCurrentTemps(currentWeather);
       setCurrentTimes(updatedCurrentTime);
     } catch (error) {
       Pop.error(error);
@@ -75,10 +82,22 @@ export function HourlyWeather({ data }) {
           </div>
           {currentTimes ? (
             <div className="d-flex justify-content-between justify-content-md-around">
-              <HourlyWeatherCard time={currentTimes[0]} />
-              <HourlyWeatherCard time={currentTimes[1]} />
-              <HourlyWeatherCard time={currentTimes[2]} />
-              <HourlyWeatherCard time={currentTimes[3]} />
+              <HourlyWeatherCard
+                time={currentTimes[0]}
+                temperature={currentTemps[0]}
+              />
+              <HourlyWeatherCard
+                time={currentTimes[1]}
+                temperature={currentTemps[1]}
+              />
+              <HourlyWeatherCard
+                time={currentTimes[2]}
+                temperature={currentTemps[2]}
+              />
+              <HourlyWeatherCard
+                time={currentTimes[3]}
+                temperature={currentTemps[3]}
+              />
             </div>
           ) : null}
         </div>

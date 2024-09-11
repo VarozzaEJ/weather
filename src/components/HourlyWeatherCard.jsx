@@ -1,9 +1,10 @@
 import logo from "../assets/img/rainy-day.png";
 
-export function HourlyWeatherCard({ time }) {
+export function HourlyWeatherCard({ time, temperature }) {
+  console.log(temperature);
   return (
     <div className="d-flex flex-column">
-      <span className="text-center">87</span>
+      <span className="text-center">{Math.round(temperature)}°F</span>
       <img
         className="img-fluid"
         style={{ height: 80, width: 80 }}

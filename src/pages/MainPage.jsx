@@ -54,7 +54,7 @@ export function MainPage() {
               {data.main ? (
                 <h1 className="text-center text-light fw-bold">
                   {((data.main.temp - 273.15) * 1.8 + 32).toFixed()}
-                  <span className="ms-1">F°</span>
+                  <span className="ms-1">°F</span>
                 </h1>
               ) : null}
 
@@ -62,11 +62,11 @@ export function MainPage() {
                 <div className="col-8 d-flex justify-content-between justify-content-md-center">
                   <span className="fs-3 d-flex text-light pe-md-4">
                     Low: {((data.main.temp_min - 273.15) * 1.8 + 32).toFixed()}
-                    <p className="ms-1 mb-0">F°</p>
+                    <p className="ms-1 mb-0">°F</p>
                   </span>
                   <span className="fs-3 d-flex text-light">
                     High: {((data.main.temp_max - 273.15) * 1.8 + 32).toFixed()}
-                    <p className="ms-1 mb-0">F°</p>
+                    <p className="ms-1 mb-0">°F</p>
                   </span>
                 </div>
               )}
