@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { HourlyWeatherCard } from "./HourlyWeatherCard.jsx";
 import { AppState } from "../AppState.js";
 import axios from "axios";
+import React from "react";
 import Pop from "../utils/Pop.js";
 
 export function HourlyWeather({ data, UTCOffset }) {
@@ -11,7 +12,7 @@ export function HourlyWeather({ data, UTCOffset }) {
   const [weatherData, setData] = useState({});
   const [currentTimes, setCurrentTimes] = useState([]);
   const [currentTemps, setCurrentTemps] = useState([]);
-
+  console.log("🗄️", data);
   useEffect(() => {
     const months = [
       "January",
@@ -35,12 +36,12 @@ export function HourlyWeather({ data, UTCOffset }) {
     if (data) {
       getSecondaryWeather();
     }
-  }, []);
+  }, [data]);
 
   const getSecondaryWeather = async () => {
     try {
       const response = await axios.get(
-        `https://api.open-meteo.com/v1/forecast?latitude=${data.lat}&longitude=${data.lon}&current=temperature_2m,weather_code&hourly=temperature_2m,weather_code&daily=weather_code,temperature_2m_max,temperature_2m_min,uv_index_max&temperature_unit=fahrenheit&wind_speed_unit=mph&precipitation_unit=inch&timeformat=unixtime`
+        `https://api.open-meteo.com/v1/forecast?latitude=${data.lat}&longitude=${data.lon}&current=temperature_2m,weather_code&hourly=temperature_2m,weather_code&daily=weather_code,temperature_2m_max,temperature_2m_min,uv_index_max&temperature_unit=fahrenheit&wind_speed_unit=mph&precipitation_unit=inch&timeformat=unixtime&timezone=America%2FDenver`
       );
       setData(response.data);
       console.log(response.data);
@@ -48,6 +49,7 @@ export function HourlyWeather({ data, UTCOffset }) {
       const currentTime = response.data.hourly.time.filter(
         (hour) => hour > response.data.current.time
       );
+
       const updatedCurrentTime = currentTime.map((hour) =>
         new Date(hour * 1000 + UTCOffset).toLocaleTimeString([], {
           hour: "numeric",
@@ -72,7 +74,7 @@ export function HourlyWeather({ data, UTCOffset }) {
               {month} {date.getDate()}
             </span>
           </div>
-          {currentTimes ? (
+          {currentTimes && currentTemps ? (
             <div className="d-flex justify-content-between justify-content-md-around">
               <HourlyWeatherCard
                 time={currentTimes[0]}

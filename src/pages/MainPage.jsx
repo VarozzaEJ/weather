@@ -6,7 +6,8 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import { Modal } from "bootstrap";
 import Pop from "../utils/Pop.js";
-
+import React from "react";
+import { render } from "react-dom";
 export function MainPage() {
   const [data, setData] = useState({});
   const [location, setLocation] = useState("");
