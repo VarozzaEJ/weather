@@ -21,7 +21,7 @@ export function MainPage() {
   };
 
   function getIconUrl(iconCode) {
-    const icon = `public/${ICON_MAP.get(iconCode)}.svg`;
+    const icon = `/${ICON_MAP.get(iconCode)}.svg`;
     setIcon(icon);
   }
 

@@ -8,13 +8,14 @@ export function HourlyWeatherCard({
   icon,
 }) {
   const [currentIcon, setCurrentIcons] = useState("");
+
   useEffect(() => {
     getIconUrl(icon);
   }, [icon]);
 
   function getIconUrl(iconCode) {
     console.log(iconCode);
-    const icon = `public/${ICON_MAP.get(iconCode)}.svg`;
+    const icon = `/${ICON_MAP.get(iconCode)}.svg`;
     setCurrentIcons(icon);
   }
   return (
