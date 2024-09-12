@@ -2,7 +2,7 @@
   "name": "skypulse",
   "version": "0.0.0",
   "type": "module",
-  "homepage": "https://skypulse-49zjoa5t3-varozzaejs-projects.vercel.app/",
+  "homepage": "https://skypulse-one.vercel.app/",
   "scripts": {
     "dev": "vite",
     "build": "vite build",
