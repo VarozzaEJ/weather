@@ -12,3 +12,4 @@ export default defineConfig({
     port: 8080
   }
 })
+//IF deployment breaks, change the publish directory to "docs". ONLY do this when using BCW's react cli

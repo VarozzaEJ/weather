@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import logo from "../assets/img/rainy-day.png";
 import { Link } from "react-router-dom";
-import { Modal } from "bootstrap";
 
 export default function HomePage() {
   return (
