@@ -14,7 +14,7 @@ export function HourlyWeatherCard({
 
   function getIconUrl(iconCode) {
     console.log(iconCode);
-    const icon = `src/assets/Icons/${ICON_MAP.get(iconCode)}.svg`;
+    const icon = `public/${ICON_MAP.get(iconCode)}.svg`;
     setCurrentIcons(icon);
   }
   return (
