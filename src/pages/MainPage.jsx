@@ -34,6 +34,7 @@ export function MainPage() {
           )
           .then((response) => {
             setData(response.data);
+            console.log(response.data.weather[0]);
             getIconUrl(response.data.weather[0].icon);
             Modal.getOrCreateInstance("#exampleModal").hide();
             Pop.toast("Location Changed", "success", "top-end", 2000);
