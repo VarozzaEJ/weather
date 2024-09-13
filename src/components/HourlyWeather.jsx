@@ -69,7 +69,6 @@ export function HourlyWeather({ data, UTCOffset }) {
         correctIndex,
         response.data.hourly.weather_code.length - correctIndex
       );
-      console.log(correctIcons);
       setCurrentIcons(correctIcons);
       setCurrentTemps(currentTemp);
       setCurrentTimes(updatedCurrentTime);
