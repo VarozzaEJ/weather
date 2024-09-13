@@ -45,6 +45,7 @@ export function HourlyWeather({ data, UTCOffset }) {
       );
       setData(response.data);
       console.log(response.data);
+
       const currentTime = response.data.hourly.time.filter(
         (hour) => hour > response.data.current.time
       );
@@ -53,7 +54,7 @@ export function HourlyWeather({ data, UTCOffset }) {
         (hour) => hour > response.data.current.time
       );
       const updatedCurrentTime = currentTime.map((hour) =>
-        new Date(hour * 1000 + UTCOffset).toLocaleTimeString([], {
+        new Date(hour * 1000).toLocaleTimeString([], {
           hour: "numeric",
           minute: "2-digit",
         })
