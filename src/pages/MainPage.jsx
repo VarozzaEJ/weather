@@ -7,6 +7,7 @@ import { Modal } from "bootstrap";
 import Pop from "../utils/Pop.js";
 import React from "react";
 import { ICON_MAP } from "../services/ICON_MAP.js";
+import * as motion from "framer-motion/client";
 export function MainPage() {
   const [data, setData] = useState({});
   const [location, setLocation] = useState("");
@@ -116,17 +117,23 @@ export function MainPage() {
                   role="button"
                   className="col-3 d-flex justify-content-center"
                 >
-                  <Icon
-                    path={mdiMapMarker}
-                    title="Set Location"
-                    horizontal
-                    vertical
-                    size={2}
-                    rotate={180}
-                    color="white"
-                    data-bs-toggle="modal"
-                    data-bs-target="#exampleModal"
-                  />
+                  <motion.button
+                    className="bg-transparent btn"
+                    whileHover={{ scale: 1.1 }}
+                    whileTap={{ scale: 0.9 }}
+                  >
+                    <Icon
+                      path={mdiMapMarker}
+                      title="Set Location"
+                      horizontal
+                      vertical
+                      size={2}
+                      rotate={180}
+                      color="white"
+                      data-bs-toggle="modal"
+                      data-bs-target="#exampleModal"
+                    />
+                  </motion.button>
                 </div>
               </div>
             </footer>
