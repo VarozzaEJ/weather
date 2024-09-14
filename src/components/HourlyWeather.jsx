@@ -70,7 +70,7 @@ export function HourlyWeather({ data, UTCOffset }) {
         response.data.hourly.weather_code.length - correctIndex
       );
       setCurrentIcons(correctIcons);
-      setCurrentTemps(currentTemp);
+      setCurrentTemps(response.data.hourly.temperature_2m);
       setCurrentTimes(updatedCurrentTime);
     } catch (error) {
       Pop.error(error);
@@ -78,39 +78,41 @@ export function HourlyWeather({ data, UTCOffset }) {
   };
   return (
     <>
-      <div className="container z glow relative rounded shadow-lg mb-1 text-light bg-smokey">
-        <div className="row">
-          <div className="col-12 mb-3 border-bottom d-flex justify-content-between">
-            <span className="my-1">Today</span>
+      <div className="glow relative">
+        <div className="container rounded shadow-lg mb-1 text-light bg-smokey">
+          <div className="row">
+            <div className="col-12 mb-3 border-bottom d-flex justify-content-between">
+              <span className="my-1">Today</span>
 
-            <span className="my-1">
-              {month} {date.getDate()}
-            </span>
-          </div>
-          {icons ? (
-            <div className="d-flex justify-content-between justify-content-md-around">
-              <HourlyWeatherCard
-                time={currentTimes[0]}
-                temperature={currentTemps[0]}
-                icon={icons[0]}
-              />
-              <HourlyWeatherCard
-                time={currentTimes[1]}
-                temperature={currentTemps[1]}
-                icon={icons[1]}
-              />
-              <HourlyWeatherCard
-                time={currentTimes[2]}
-                temperature={currentTemps[2]}
-                icon={icons[2]}
-              />
-              <HourlyWeatherCard
-                time={currentTimes[3]}
-                temperature={currentTemps[3]}
-                icon={icons[3]}
-              />
+              <span className="my-1">
+                {month} {date.getDate()}
+              </span>
             </div>
-          ) : null}
+            {icons ? (
+              <div className="d-flex justify-content-between justify-content-md-around">
+                <HourlyWeatherCard
+                  time={currentTimes[0]}
+                  temperature={currentTemps[0]}
+                  icon={icons[0]}
+                />
+                <HourlyWeatherCard
+                  time={currentTimes[1]}
+                  temperature={currentTemps[1]}
+                  icon={icons[1]}
+                />
+                <HourlyWeatherCard
+                  time={currentTimes[2]}
+                  temperature={currentTemps[2]}
+                  icon={icons[2]}
+                />
+                <HourlyWeatherCard
+                  time={currentTimes[3]}
+                  temperature={currentTemps[3]}
+                  icon={icons[3]}
+                />
+              </div>
+            ) : null}
+          </div>
         </div>
       </div>
     </>

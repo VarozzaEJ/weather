@@ -1,6 +1,6 @@
 import { HourlyWeather } from "../components/HourlyWeather.jsx";
 import Icon from "@mdi/react";
-import { mdiLoading, mdiMapMarker } from "@mdi/js";
+import { mdiArrowRight, mdiLoading, mdiMapMarker } from "@mdi/js";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import { Modal } from "bootstrap";
@@ -8,6 +8,7 @@ import Pop from "../utils/Pop.js";
 import React from "react";
 import { ICON_MAP } from "../services/ICON_MAP.js";
 import * as motion from "framer-motion/client";
+import { Link, useLocation } from "react-router-dom";
 export function MainPage() {
   const [data, setData] = useState({});
   const [location, setLocation] = useState("");
@@ -18,7 +19,7 @@ export function MainPage() {
   });
 
   const openModal = () => {
-    Modal.getOrCreateInstance("#exampleModal").show();
+    Modal.getOrCreateInstance("#chooseLocationModal").show();
   };
 
   function getIconUrl(iconCode) {
@@ -36,9 +37,9 @@ export function MainPage() {
           )
           .then((response) => {
             setData(response.data);
-            console.log(response.data.weather[0]);
+            console.log(response.data);
             getIconUrl(response.data.weather[0].icon);
-            Modal.getOrCreateInstance("#exampleModal").hide();
+            Modal.getOrCreateInstance("#chooseLocationModal").hide();
             Pop.toast("Location Changed", "success", "top-end", 2000);
           });
       } catch (error) {
@@ -113,11 +114,8 @@ export function MainPage() {
             ) : null}
 
             <footer className="container mb-2">
-              <div className="row d-flex justify-content-center">
-                <div
-                  role="button"
-                  className="col-3 d-flex justify-content-center"
-                >
+              <div className="row d-flex justify-content-between">
+                <div className="col-12 d-flex justify-content-between">
                   <motion.button
                     className="bg-transparent btn"
                     whileHover={{ scale: 1.1 }}
@@ -132,9 +130,25 @@ export function MainPage() {
                       rotate={180}
                       color="white"
                       data-bs-toggle="modal"
-                      data-bs-target="#exampleModal"
+                      data-bs-target="#chooseLocationModal"
                     />
                   </motion.button>
+                  {data.main ? (
+                    <Link to={`/Info/${data.coord.lon}/${data.coord.lat}`}>
+                      <motion.button
+                        className="bg-transparent btn"
+                        whileHover={{ scale: 1.1 }}
+                        whileTap={{ scale: 0.9 }}
+                      >
+                        <Icon
+                          path={mdiArrowRight}
+                          title="Change Page"
+                          size={2}
+                          color="white"
+                        />
+                      </motion.button>
+                    </Link>
+                  ) : null}
                 </div>
               </div>
             </footer>
@@ -144,15 +158,15 @@ export function MainPage() {
 
       <div
         className="modal  fade"
-        id="exampleModal"
+        id="chooseLocationModal"
         tabIndex="-1"
-        aria-labelledby="exampleModalLabel"
+        aria-labelledby="chooseLocationModalLabel"
         aria-hidden="true"
       >
         <div className="modal-dialog position-fixed bottom-0 end-0 start-0">
           <div className="modal-content bg-secondary">
             <div className="modal-header">
-              <h1 className="modal-title fs-5" id="exampleModalLabel">
+              <h1 className="modal-title fs-5" id="chooseLocationModalLabel">
                 Choose A Location
               </h1>
               <button
