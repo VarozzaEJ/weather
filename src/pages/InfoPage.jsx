@@ -32,7 +32,7 @@ export default function InfoPage() {
       {weatherData.daily ? (
         <div className="container my-4 full-vh">
           <div className="row mx-3">
-            <div className="col-12">
+            <div className="col-12 ps-2">
               <span className="fs-2 text-light fw-bold">7 Day Forecast</span>
             </div>
           </div>
