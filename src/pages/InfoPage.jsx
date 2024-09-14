@@ -30,20 +30,22 @@ export default function InfoPage() {
   return (
     <>
       {weatherData.daily ? (
-        <div className="container m-4 full-vh">
-          <div className="row">
+        <div className="container my-4 full-vh">
+          <div className="row mx-3">
             <div className="col-12">
               <span className="fs-2 text-light fw-bold">7 Day Forecast</span>
             </div>
           </div>
-          <div className="row d-flex">
+          <div className="row d-flex overflow-x-scroll flex-nowrap  mx-3">
             {weatherData.daily.temperature_2m_max.map((temp, index) => (
-              <DailyWeatherCard
-                key={temp}
-                temperature={weatherData.daily.temperature_2m_max[index]}
-                icon={weatherData.daily.weather_code[index]}
-                time={weatherData.daily.time[index]}
-              />
+              <div className="col-md-3 col-4 bg-smokey mx-1 daily-weather-card ">
+                <DailyWeatherCard
+                  key={temp}
+                  temperature={weatherData.daily.temperature_2m_max[index]}
+                  icon={weatherData.daily.weather_code[index]}
+                  time={weatherData.daily.time[index]}
+                />
+              </div>
             ))}
           </div>
         </div>
