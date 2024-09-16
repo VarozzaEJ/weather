@@ -160,9 +160,7 @@ export function MainPage() {
             </div>
           </div>
           <div>
-            {weatherData.daily ? (
-              <HourlyWeather data={weatherData} UTCOffset={data.timezone} />
-            ) : null}
+            {weatherData.daily ? <HourlyWeather data={weatherData} /> : null}
             {weatherData.daily && airData.hourly ? (
               <div className="container my-4 ">
                 <div className="row">

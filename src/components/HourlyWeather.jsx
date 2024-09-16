@@ -5,7 +5,7 @@ import axios from "axios";
 import React from "react";
 import Pop from "../utils/Pop.js";
 
-export function HourlyWeather({ data, UTCOffset }) {
+export function HourlyWeather({ data }) {
   const today = new Date();
   const [date, setDate] = useState(today);
   const [month, setMonth] = useState("");
