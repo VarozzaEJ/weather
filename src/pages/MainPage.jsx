@@ -26,7 +26,7 @@ export function MainPage() {
 
   useEffect(() => {
     openModal();
-  });
+  }, []);
 
   const openModal = () => {
     Modal.getOrCreateInstance("#chooseLocationModal").show();
@@ -59,10 +59,11 @@ export function MainPage() {
               .then((airQualityResponse) => {
                 setAirData(airQualityResponse.data);
                 console.log("🌪️", airQualityResponse.data);
+                Modal.getOrCreateInstance("#chooseLocationModal").hide();
               });
             axios
               .get(
-                `https://api.open-meteo.com/v1/forecast?latitude=${response.data.coord.lat}&longitude=${response.data.coord.lon}&current=temperature_2m,weather_code&hourly=temperature_2m,weather_code&daily=sunrise,sunset,weather_code,temperature_2m_max,temperature_2m_min,uv_index_max&temperature_unit=fahrenheit&wind_speed_unit=mph&precipitation_unit=inch&timeformat=unixtime&timezone=America%2FDenver&forecast_days=3`
+                `https://api.open-meteo.com/v1/forecast?latitude=${response.data.coord.lat}&longitude=${response.data.coord.lon}&current=temperature_2m,weather_code&hourly=temperature_2m,weather_code&daily=sunrise,sunset,weather_code,temperature_2m_max,temperature_2m_min,uv_index_max&temperature_unit=fahrenheit&wind_speed_unit=mph&precipitation_unit=inch&timeformat=unixtime&timezone=America%2FDenver&forecast_days=7`
               )
               .then((weatherDataResponse) => {
                 setWeatherData(weatherDataResponse.data);
@@ -88,6 +89,7 @@ export function MainPage() {
                   }
                 );
                 setSunsetTime(sunset);
+                Modal.getOrCreateInstance("#chooseLocationModal").hide();
               });
           });
       } catch (error) {
@@ -158,8 +160,8 @@ export function MainPage() {
             </div>
           </div>
           <div>
-            {data.main ? (
-              <HourlyWeather data={data.coord} UTCOffset={data.timezone} />
+            {weatherData.daily ? (
+              <HourlyWeather data={weatherData} UTCOffset={data.timezone} />
             ) : null}
             {weatherData.daily && airData.hourly ? (
               <div className="container my-4 ">
@@ -172,7 +174,7 @@ export function MainPage() {
                 </div>
                 <div className="row d-flex overflow-x-scroll flex-nowrap ">
                   {weatherData.daily.temperature_2m_max.map((temp, index) => (
-                    <div className="col-md-3 col-4 bg-smokey mx-1 daily-weather-card ">
+                    <div className="col-md-3 col-4 bg-smokey mx-1 rounded shadow-lg ">
                       <DailyWeatherCard
                         key={temp}
                         temperature={
@@ -211,8 +213,8 @@ export function MainPage() {
                     )}
                   </div>
                 </div>
-                <div className="row d-flex justify-content-between justify-content-md-around">
-                  <div className="col-5 col-md-4  bg-smokey rounded">
+                <div className="row d-flex justify-content-between justify-content-md-between">
+                  <div className="col-5 col-md-5  bg-smokey rounded">
                     <div className="row">
                       <div className="col-12 text-white-50 fs-6">
                         <Icon
@@ -236,7 +238,7 @@ export function MainPage() {
                       ) : null}
                     </div>
                   </div>
-                  <div className="col-5 col-md-4 bg-smokey rounded">
+                  <div className="col-5 col-md-5 bg-smokey rounded">
                     <div className="row">
                       <div className="col-12 text-white-50 fs-6">
                         <Icon
@@ -281,7 +283,7 @@ export function MainPage() {
               </div>
             ) : null}
 
-            <footer className="container mb-2 sticky-bottom">
+            <footer className="container mb-2 fab">
               <div className="row d-flex justify-content-end">
                 <div className="col-12 d-flex justify-content-end">
                   <motion.button
@@ -292,6 +294,7 @@ export function MainPage() {
                     <Icon
                       path={mdiMapMarker}
                       title="Set Location"
+                      className="shadow-lg"
                       horizontal
                       vertical
                       size={2}

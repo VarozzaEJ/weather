@@ -24,10 +24,10 @@ export const router = createHashRouter([
         path: "main",
         element: <MainPage />,
       },
-      {
-        path: "info/:lon/:lat",
-        element: <InfoPage />,
-      },
+      // {
+      //   path: "info/:lon/:lat",
+      //   element: <InfoPage />,
+      // },
       {
         path: "about",
         element: <AboutPage />,

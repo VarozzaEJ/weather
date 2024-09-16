@@ -50,7 +50,11 @@ html {
   border-bottom-left-radius: 10%;
   border-bottom-right-radius: 10%;
   border-top-right-radius: 10%;
-  box-shadow: 2px 1px black;
+}
+.fab {
+  position: fixed;
+  bottom: 1em;
+  right: 1em;
 }
 
 @keyframes color {

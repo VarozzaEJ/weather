@@ -40,18 +40,12 @@ export function HourlyWeather({ data, UTCOffset }) {
 
   const getSecondaryWeather = async () => {
     try {
-      const response = await axios.get(
-        `https://api.open-meteo.com/v1/forecast?latitude=${data.lat}&longitude=${data.lon}&current=temperature_2m,weather_code&hourly=temperature_2m,weather_code&daily=weather_code,temperature_2m_max,temperature_2m_min,uv_index_max&temperature_unit=fahrenheit&wind_speed_unit=mph&precipitation_unit=inch&timeformat=unixtime&timezone=America%2FDenver&forecast_days=3`
-      );
-      setData(response.data);
-      console.log(response.data);
-
-      const currentTime = response.data.hourly.time.filter(
-        (hour) => hour > response.data.current.time
+      const currentTime = data.hourly.time.filter(
+        (hour) => hour > data.current.time
       );
 
-      const correctIndex = response.data.hourly.time.findIndex(
-        (hour) => hour > response.data.current.time
+      const correctIndex = data.hourly.time.findIndex(
+        (hour) => hour > data.current.time
       );
       const updatedCurrentTime = currentTime.map((hour) =>
         new Date(hour * 1000).toLocaleTimeString([], {
@@ -60,17 +54,17 @@ export function HourlyWeather({ data, UTCOffset }) {
         })
       );
 
-      const currentTemp = response.data.hourly.temperature_2m.splice(
+      const currentTemp = data.hourly.temperature_2m.splice(
         correctIndex,
-        response.data.hourly.temperature_2m.length - correctIndex
+        data.hourly.temperature_2m.length - correctIndex
       );
 
-      const correctIcons = response.data.hourly.weather_code.splice(
+      const correctIcons = data.hourly.weather_code.splice(
         correctIndex,
-        response.data.hourly.weather_code.length - correctIndex
+        data.hourly.weather_code.length - correctIndex
       );
       setCurrentIcons(correctIcons);
-      setCurrentTemps(response.data.hourly.temperature_2m);
+      setCurrentTemps(currentTemp);
       setCurrentTimes(updatedCurrentTime);
     } catch (error) {
       Pop.error(error);
