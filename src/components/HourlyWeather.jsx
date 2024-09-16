@@ -86,22 +86,22 @@ export function HourlyWeather({ data, UTCOffset }) {
               <div className="d-flex justify-content-between justify-content-md-around">
                 <HourlyWeatherCard
                   time={currentTimes[0]}
-                  temperature={currentTemps[0]}
+                  temperature={data.hourly.temperature_2m[0]}
                   icon={icons[0]}
                 />
                 <HourlyWeatherCard
                   time={currentTimes[1]}
-                  temperature={currentTemps[1]}
+                  temperature={data.hourly.temperature_2m[1]}
                   icon={icons[1]}
                 />
                 <HourlyWeatherCard
                   time={currentTimes[2]}
-                  temperature={currentTemps[2]}
+                  temperature={data.hourly.temperature_2m[2]}
                   icon={icons[2]}
                 />
                 <HourlyWeatherCard
                   time={currentTimes[3]}
-                  temperature={currentTemps[3]}
+                  temperature={data.hourly.temperature_2m[3]}
                   icon={icons[3]}
                 />
               </div>

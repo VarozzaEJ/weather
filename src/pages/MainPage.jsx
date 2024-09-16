@@ -63,7 +63,7 @@ export function MainPage() {
               });
             axios
               .get(
-                `https://api.open-meteo.com/v1/forecast?latitude=${response.data.coord.lat}&longitude=${response.data.coord.lon}&current=temperature_2m,weather_code&hourly=temperature_2m,weather_code&daily=sunrise,sunset,weather_code,temperature_2m_max,temperature_2m_min,uv_index_max&temperature_unit=fahrenheit&wind_speed_unit=mph&precipitation_unit=inch&timeformat=unixtime&timezone=America%2FDenver&forecast_days=7`
+                `https://api.open-meteo.com/v1/forecast?latitude=${response.data.coord.lat}&longitude=${response.data.coord.lon}&current=temperature_2m,weather_code&hourly=temperature_2m,weather_code&daily=sunrise,sunset,weather_code,temperature_2m_max,temperature_2m_min,uv_index_max&temperature_unit=fahrenheit&wind_speed_unit=mph&precipitation_unit=inch&timeformat=unixtime&timezone=auto&forecast_days=7`
               )
               .then((weatherDataResponse) => {
                 setWeatherData(weatherDataResponse.data);
@@ -174,7 +174,10 @@ export function MainPage() {
                 </div>
                 <div className="row d-flex overflow-x-scroll flex-nowrap ">
                   {weatherData.daily.temperature_2m_max.map((temp, index) => (
-                    <div className="col-md-3 col-4 bg-smokey mx-1 rounded shadow-lg ">
+                    <div
+                      key={index}
+                      className="col-md-3 col-4 bg-smokey mx-1 rounded shadow-lg "
+                    >
                       <DailyWeatherCard
                         key={temp}
                         temperature={
