@@ -3,14 +3,20 @@ import { ICON_MAP } from "../services/ICON_MAP.js";
 export function DailyWeatherCard({ temperature, icon, time }) {
   const [currentIcon, setCurrentIcons] = useState("");
   const [currentTime, setCurrentTime] = useState("");
+
   useEffect(() => {
     getIconUrl(icon);
+    setTime();
+  }, []);
+
+  function setTime() {
     setCurrentTime(
       new Date(time * 1000)
         .toLocaleDateString([], { weekday: "long" })
         .split("", 3)
     );
-  });
+  }
+
   function getIconUrl(iconCode) {
     const icon = `/${ICON_MAP.get(iconCode)}.svg`;
     setCurrentIcons(icon);

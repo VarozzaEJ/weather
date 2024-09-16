@@ -82,9 +82,9 @@ export function HourlyWeather({ data, UTCOffset }) {
         <div className="container rounded shadow-lg mb-1 text-light bg-smokey">
           <div className="row">
             <div className="col-12 mb-3 border-bottom d-flex justify-content-between">
-              <span className="my-1">Today</span>
+              <span className="my-1 text-white-50">Today</span>
 
-              <span className="my-1">
+              <span className="my-1 ">
                 {month} {date.getDate()}
               </span>
             </div>

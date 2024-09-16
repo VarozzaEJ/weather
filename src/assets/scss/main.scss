@@ -6,6 +6,9 @@
 
 body {
   overscroll-behavior: none;
+  background: linear-gradient((45deg, #c400d2, #7462ff, #1e10b8, #046fad));
+  background-size: 400% 400%;
+  animation: color 12s ease-in-out infinite;
 }
 
 :root {
@@ -20,16 +23,14 @@ body {
 .relative {
   position: relative;
 }
+html {
+}
 #app {
   display: flex;
   flex-direction: column;
-  min-height: 100vh;
-  background: linear-gradient((45deg, #c400d2, #7462ff, #1e10b8, #046fad));
-  background-size: 400% 400%;
-  animation: color 12s ease-in-out infinite;
 }
 .card-height {
-  height: 5rem;
+  height: 3rem;
 }
 .bg-smokey {
   background-color: rgba(255, 254, 254, 0.197);
