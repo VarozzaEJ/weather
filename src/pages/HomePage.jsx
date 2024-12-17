@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import logo from "../assets/img/rainy-day.png";
 import { Link } from "react-router-dom";
 import * as motion from "framer-motion/client";
+import Login from "../components/Login.jsx";
 
 export default function HomePage() {
   const svgVariants = {
@@ -90,7 +91,7 @@ export default function HomePage() {
               />
             </svg>
             <div>
-              <h1 className="text-center text-light mt-3">Weathery</h1>
+              <h1 className="text-center text-light mt-3">SkyPulse</h1>
               <Link className="d-flex justify-content-center" to={"Main"}>
                 <motion.button
                   whileHover={{ scale: 1.1 }}
@@ -100,6 +101,7 @@ export default function HomePage() {
                   Get Started
                 </motion.button>
               </Link>
+              <Login />
             </div>
           </div>
         </div>
