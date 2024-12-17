@@ -101,7 +101,6 @@ export default function HomePage() {
                   Get Started
                 </motion.button>
               </Link>
-              <Login />
             </div>
           </div>
         </div>
